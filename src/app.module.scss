@@ -1,0 +1,33 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  background-color: #e1eaff;
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
+.container {
+  width: 784px;
+  margin-top: 30px;
+
+  .desc {
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: 12px;
+    color: #9195a3;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  .timeLineBox {
+    border-radius: 12px;
+    padding: 20px 16px;
+    background-color: #ffffff;
+    min-height: 670px;
+    margin-top: 40px;
+  }
+}
