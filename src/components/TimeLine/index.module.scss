@@ -1,0 +1,63 @@
+.timeLine {
+  width: 100%;
+
+  &:not(:last-child) .content::before {
+    position: absolute;
+    left: -12px;
+    top: 0;
+    content: ' ';
+    height: 100%;
+    border-left: 1px #ddd dashed;
+  }
+
+  .gapLeft8 {
+    margin-left: 8px;
+  }
+
+  .topWrap {
+    display: flex;
+    align-items: center;
+    height: 16px;
+    // border: 1px red solid;
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border: 1.5px solid #4e6ef2;
+      border-radius: 50%;
+      box-sizing: border-box;
+    }
+
+    .time {
+      color: #9195a3;
+      font-size: 12px;
+    }
+  }
+
+  .content {
+    position: relative;
+    padding-top: 4px;
+    padding-bottom: 16px;
+    margin-left: 16px;
+
+    .text {
+      font-size: 14px;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+          color: #315efb;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        &:visited {
+          color: #771caa;
+        }
+
+      }
+    }
+  }
+}
