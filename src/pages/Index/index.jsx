@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import TimeLinePage from '@/pages/TimeLinePage'
+import { Outlet, NavLink } from "react-router-dom";
 import styles from './index.module.scss'
 
 export default function Index() {
@@ -11,10 +10,22 @@ export default function Index() {
         <nav>
           <ul>
             <li>
-              <Link to={'/timeLine'}>时间线</Link>
+              <NavLink
+                to={'/timeLine'}
+                className={({ isActive, isPending }) =>
+                  isPending ? styles.pending : isActive ? styles.active : ""
+                }>
+                时间线
+              </NavLink>
             </li>
             <li>
-              <Link to={'/testPage'}>testPage</Link>
+              <NavLink
+                to={'/testPage'}
+                className={({ isActive, isPending }) =>
+                  isPending ? styles.pending : isActive ? styles.active : ""
+                }>
+                testPage
+              </NavLink>
             </li>
             <li>
               <a href={`/contacts/2`}>错误页面</a>
@@ -23,8 +34,7 @@ export default function Index() {
         </nav>
       </div>
       <main className={styles.main}>
-        {/*TODO 根据路由显示对应的组件 */}
-        <TimeLinePage></TimeLinePage>
+        <Outlet />
       </main>
     </div>
   )
