@@ -5,6 +5,7 @@ import NotFound from '@/pages/ErrorPage/NotFound/index'
 import React from 'react'
 import {
   createBrowserRouter,
+  Navigate,
   RouterProvider,
 } from "react-router-dom";
 
@@ -13,18 +14,21 @@ function App() {
   const routerData = [
     {
       path: "/",
+      element: <Navigate to="/timeLine" replace />,
+      errorElement: <NotFound />,
+    },
+    {
       element: <Index />,
-      errorElement: <NotFound/>,
       children: [
         {
           path: "timeLine",
           element: <TimeLine />,
-          errorElement: <NotFound/>
+          errorElement: <NotFound />
         },
         {
           path: "testPage",
           element: <TestPage />,
-          errorElement: <NotFound/>
+          errorElement: <NotFound />
         },
       ]
     },
