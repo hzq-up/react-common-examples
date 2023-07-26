@@ -8,13 +8,14 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import BoxMove from './pages/BoxMove'
 
 function App() {
 
   const routerData = [
     {
       path: "/",
-      element: <Navigate to="/timeLine" replace />,
+      element: <Navigate to="/timeLine" />,
       errorElement: <NotFound />,
     },
     {
@@ -28,6 +29,11 @@ function App() {
         {
           path: "testPage",
           element: <TestPage />,
+          errorElement: <NotFound />
+        },
+        {
+          path: "boxMove",
+          element: <BoxMove />,
           errorElement: <NotFound />
         },
       ]

@@ -28,6 +28,15 @@ export default function Index() {
               </NavLink>
             </li>
             <li>
+              <NavLink
+                to={'/boxMove'}
+                className={({ isActive, isPending }) =>
+                  isPending ? styles.pending : isActive ? styles.active : ""
+                }>
+                boxMove
+              </NavLink>
+            </li>
+            <li>
               <a href={`/contacts/2`}>错误页面</a>
             </li>
           </ul>
