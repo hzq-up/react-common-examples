@@ -1,12 +1,12 @@
-$line-length: 16px;
+$line-length: 14px;
 $gap: 8px;
 $img-width: 130px;
+$line-size: 3px;
 :export {
   lineLength: $line-length;
   gap: $gap;
   imgWidth: $img-width;
 }
-
 
 .container {
   display: flex;
@@ -16,19 +16,18 @@ $img-width: 130px;
   width: 100%;
   background-color: #5b4c3c;
 
-
   .gridContainer {
-
     display: grid;
     position: relative;
-    grid-template-columns: repeat(3, $img-width); /* 三列，每列宽度为 $img-width */
+    grid-template-columns: repeat(
+      3,
+      $img-width
+    ); /* 三列，每列宽度为 $img-width */
     grid-template-rows: repeat(3, $img-width); /* 三行，每行高度为 $img-width */
-    gap: calc($gap *2); /* 列间隔和行间隔为 20px */
+    gap: calc($gap * 2); /* 列间隔和行间隔为 20px */
     justify-content: center; /* 让九宫格水平居中 */
     align-items: center; /* 让九宫格垂直居中 */
     .boxImg {
-      
-
       img {
         display: flex;
         width: $img-width;
@@ -38,27 +37,22 @@ $img-width: 130px;
 
     .box {
       --x: 0px;
-      --y: 1px;
+      --y: 0px;
       position: absolute;
-      height: calc($img-width + 2 * $gap);
-      width: calc($img-width + 2 * $gap);
-      top: calc($gap * -1 + var(--x));
-      left: calc($gap * -1 + var(--y));
-      // transform: 0.5s;
-      // background: conic-gradient(from 0 at 40px 40px, transparent  75%, red 75% 100%)
-      // 0 0 / calc(100% - 40px) calc(100% - 40px);
-      // background: conic-gradient(at 40px 40px, red 37.5%, transparent 37.5%);
+      height: calc($img-width + 2 * $gap + $line-size * 2);
+      width: calc($img-width + 2 * $gap + $line-size * 2);
+      top: calc($gap * -1 + var(--y) - $line-size);
+      left: calc($gap * -1 + var(--x) - $line-size);
+      transition: 0.3s;
       // 让元素按照某张图片的轮廓来显示
-      -webkit-mask: conic-gradient(at $line-length $line-length,
+      -webkit-mask: conic-gradient(
+          at $line-length $line-length,
           transparent 75%,
-          blue 75% 100%) 0 0 / calc(100% - $line-length) calc(100% - $line-length);
-      border: 2px white solid;
+          blue 75% 100%
+        )
+        0 0 / calc(100% - $line-length) calc(100% - $line-length);
+      border: $line-size white solid;
       box-sizing: border-box;
-      // background: conic-gradient(at 40px 40px,
-      //     transparent 75%,
-      //     blue 75% 100%) 0 0 / calc(100% - 40px) calc(100% - 40px);
-
     }
   }
-
 }

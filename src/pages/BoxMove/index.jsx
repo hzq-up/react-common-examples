@@ -1,26 +1,26 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import styles from './index.module.scss'
 function BoxMove() {
   useEffect(() => {
-    const imgContainer = document.querySelector(`.${styles.gridContainer}`)
     const imgs = document.querySelectorAll(`.${styles.boxImg} img`)
     const box = document.querySelector(`.${styles.box}`)
     for (const img of imgs) {
       img.onmouseenter = (e) => {
-        const imgWidth = e.target.offsetWidth;
+        // const imgWidth = e.target.offsetWidth;
         const x = e.target.offsetLeft;
         const y = e.target.offsetTop;
-        console.log(x, y)
-        console.log(y - styles.gap.replace('px') + 'px')
-        box.style.setProperty('top', y - styles.gap.replace('px', '') + 'px')
-        box.style.setProperty('left', x - styles.gap.replace('px', '') + 'px')
-        // const lineLength = 
+
+        box.style.setProperty('--x', x + 'px')
+        box.style.setProperty('--y', y + 'px')
       }
     }
-    // .onmouseenter = () => {
-    //   console.log('aa')
-    // }
   }, [])
+
+
+  const getImgSrc = (image) => {
+    const src = `src/assets/images/${image}`
+    return src;
+  }
 
   return (
     <div className={styles.container}>
@@ -28,7 +28,7 @@ function BoxMove() {
         {
           Array.from(new Array(9)).map((item, i) => {
             return <div key={i} className={styles.boxImg}>
-              <img src={new URL(`@/assets/images/a1.jpg`, import.meta.url).href}></img>
+              <img src={getImgSrc(`a${i + 1}.jpg`)}></img>
             </div>
           })
         }
