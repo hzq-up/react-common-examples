@@ -1,7 +1,7 @@
-$line-length: 14px;
-$gap: 8px;
-$img-width: 130px;
-$line-size: 3px;
+$line-length: 14px; // 框线的长度
+$gap: 6px; // 框到图片的距离
+$img-width: 130px; // 图片的长度
+$line-size: 3px; // 线的粗细
 :export {
   lineLength: $line-length;
   gap: $gap;
@@ -14,7 +14,8 @@ $line-size: 3px;
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: #5b4c3c;
+  // background-color: #5b4c3c;
+  background-color: #7f8fa6;
 
   .gridContainer {
     display: grid;
@@ -24,9 +25,10 @@ $line-size: 3px;
       $img-width
     ); /* 三列，每列宽度为 $img-width */
     grid-template-rows: repeat(3, $img-width); /* 三行，每行高度为 $img-width */
-    gap: calc($gap * 2); /* 列间隔和行间隔为 20px */
+    gap: calc($gap * 3); /* 列间隔和行间隔为 20px */
     justify-content: center; /* 让九宫格水平居中 */
     align-items: center; /* 让九宫格垂直居中 */
+
     .boxImg {
       img {
         display: flex;
