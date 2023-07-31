@@ -1,6 +1,5 @@
 export default function Index() {
 
-
   let lastExecutionTime = Date.now();
   const interval = 1000; // 定时器的执行频率为1秒
   
@@ -10,13 +9,23 @@ export default function Index() {
   
     // 更新上次执行时间
     lastExecutionTime = Date.now();
-  
-    // 使用 requestAnimationFrame 来触发下一次定时任务
-    requestAnimationFrame(doSomething);
   };
   
-  // 开始执行定时任务
-  // requestAnimationFrame(doSomething);
+  const animationLoop = () => {
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - lastExecutionTime;
+  
+    // 当距离上次执行的时间大于等于定时器的频率时，执行任务
+    if (elapsedTime >= interval) {
+      doSomething();
+    }
+  
+    // 继续执行下一帧
+    requestAnimationFrame(animationLoop);
+  };
+  
+  // 开始动画循环
+  animationLoop();
 
   return (
     <div >

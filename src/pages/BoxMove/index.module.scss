@@ -1,5 +1,5 @@
 $line-length: 14px; // 框线的长度
-$gap: 6px; // 框到图片的距离
+$gap: 4px; // 框到图片的距离
 $img-width: 130px; // 图片的长度
 $line-size: 3px; // 线的粗细
 :export {
@@ -25,7 +25,7 @@ $line-size: 3px; // 线的粗细
       $img-width
     ); /* 三列，每列宽度为 $img-width */
     grid-template-rows: repeat(3, $img-width); /* 三行，每行高度为 $img-width */
-    gap: calc($gap * 3); /* 列间隔和行间隔为 20px */
+    gap: calc($gap * 4); /* 列间隔和行间隔为 20px */
     justify-content: center; /* 让九宫格水平居中 */
     align-items: center; /* 让九宫格垂直居中 */
 
