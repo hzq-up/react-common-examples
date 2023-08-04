@@ -9,6 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import BoxMove from './pages/BoxMove'
+import Sticky from './pages/Sticky'
 
 function App() {
 
@@ -34,6 +35,11 @@ function App() {
         {
           path: "boxMove",
           element: <BoxMove />,
+          errorElement: <NotFound />
+        },
+        {
+          path: "sticky",
+          element: <Sticky />,
           errorElement: <NotFound />
         },
       ]
