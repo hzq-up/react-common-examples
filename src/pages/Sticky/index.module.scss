@@ -2,6 +2,7 @@
   // background-color: #7f8fa6;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   // display: flex;
   // justify-content: center;
   // align-items: center;
@@ -23,10 +24,11 @@
   .main {
     display: flex;
     width: 100%;
-    height: 100%;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    box-sizing: border-box;
+    margin-top: 70px;
     .sticky-example {
       position: relative;
       height: 500px;
