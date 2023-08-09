@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import BoxMove from './pages/BoxMove'
 import Sticky from './pages/Sticky'
+import TransformPage from './pages/TransformPage'
 
 function App() {
 
@@ -40,6 +41,11 @@ function App() {
         {
           path: "sticky",
           element: <Sticky />,
+          errorElement: <NotFound />
+        },
+        {
+          path: "transformPage",
+          element: <TransformPage />,
           errorElement: <NotFound />
         },
       ]

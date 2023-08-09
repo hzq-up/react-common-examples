@@ -1,0 +1,42 @@
+.container {
+  .description {
+    background-color: #7f8fa6;
+    padding: 20px;
+    border-radius: 12px;
+    color: white;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    p {
+      padding: 10px 0;
+
+      &:first-child {
+        margin: auto;
+      }
+    }
+  }
+  h2 {
+    padding: 20px 0;
+  }
+  .example {
+    .box {
+      height: 100px;
+      width: 100px;
+      background-color: aquamarine;
+    }
+    .transform-xy-100-rotate-100deg {
+      transform: translate(100px, 100px) rotate(45deg);
+      transition: all 1s ease;
+    }
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      background-color: #2b63fd;
+      color: white;
+      border: 1px royalblue solid;
+      cursor: pointer;
+      &:active {
+        background-color: #5480fa;
+      }
+    }
+  }
+}
