@@ -1,11 +1,12 @@
 .container {
   .description {
-    background-color: #7f8fa6;
+    background-color: #f5f5f5;
     padding: 20px;
     border-radius: 12px;
-    color: white;
+    color: black;
     letter-spacing: 1px;
     line-height: 1.5;
+    border: 1px #d3d3d3 solid;
     p {
       padding: 10px 0;
 
@@ -15,7 +16,12 @@
     }
   }
   h2 {
-    padding: 20px 0;
+    font-size: 22px;
+    line-height: 34px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ececec;
+    margin-top: 35px;
+    margin-bottom: 10px;
   }
   .example {
     .box {
@@ -36,6 +42,56 @@
       cursor: pointer;
       &:active {
         background-color: #5480fa;
+      }
+    }
+    .divide {
+      width: 100%;
+      margin: 24px 0;
+      border-top: 1px #ffffff solid;
+      box-sizing: border-box;
+    }
+  }
+
+  .olympicFiveRing {
+    $r: 40px;
+    $borderWidth: 6px;
+    $gap: 10px;
+    position: relative;
+    width: calc($r * 2 * 3 + $gap * 2);
+    text-align: center;
+    transform-style: preserve-3d;
+    .ring {
+      display: inline-block;
+      height: calc($r * 2);
+      width: calc($r * 2);
+      border-radius: 50%;
+      border: $borderWidth solid black;
+      margin-left: $gap;
+      box-sizing: border-box;
+
+      &:nth-child(1) {
+        border-color: #307aba;
+        margin-left: 0;
+      }
+      &:nth-child(2) {
+        border-color: #020100;
+        transform-origin: 15% 75%;
+        transform: rotatex(3deg);
+      }
+      &:nth-child(3) {
+        border-color: #d7322d;
+        transform-origin: center 75%;
+        transform: rotateX(1deg);
+      }
+      &:nth-child(4) {
+        border-color: #f9ce40;
+        margin-left: 0;
+        transform-origin: center 15%;
+        transform: translateY(-$r) rotatex(1deg);
+      }
+      &:nth-child(5) {
+        border-color: #54a14e;
+        transform: translateY(-$r);
       }
     }
   }
