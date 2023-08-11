@@ -81,7 +81,7 @@
       &:nth-child(3) {
         border-color: #d7322d;
         transform-origin: center 75%;
-        transform: rotateX(1deg);
+        transform: rotateX(12deg);
       }
       &:nth-child(4) {
         border-color: #f9ce40;
@@ -91,7 +91,8 @@
       }
       &:nth-child(5) {
         border-color: #54a14e;
-        transform: translateY(-$r);
+        transform-origin: 15% 15%;
+        transform: translateY(-$r) rotateX(6deg);
       }
     }
   }
