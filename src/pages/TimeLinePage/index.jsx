@@ -1,3 +1,4 @@
+import CH2 from '@/components/CH2'
 import TimeLine from '@/components/TimeLine'
 import styles from './index.module.scss'
 
@@ -25,7 +26,7 @@ export default function TimeLinePage() {
 
   return (
     <div className={styles.container}>
-      <h2>时间线</h2>
+      <CH2>时间线</CH2>
       <p className={styles.desc}>这是一个时间线组件的展示!</p>
       <div className={styles.timeLineBox}>
         <TimeLine data={initData}></TimeLine>

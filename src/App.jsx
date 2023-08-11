@@ -11,6 +11,7 @@ import {
 import BoxMove from './pages/BoxMove'
 import Sticky from './pages/Sticky'
 import TransformPage from './pages/TransformPage'
+import Gradient from './pages/Gradient'
 
 function App() {
 
@@ -46,6 +47,11 @@ function App() {
         {
           path: "transformPage",
           element: <TransformPage />,
+          errorElement: <NotFound />
+        },
+        {
+          path: "gradient",
+          element: <Gradient />,
           errorElement: <NotFound />
         },
       ]

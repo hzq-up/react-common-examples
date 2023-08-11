@@ -1,0 +1,11 @@
+.btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #2b63fd;
+  color: white;
+  border: 1px royalblue solid;
+  cursor: pointer;
+  &:active {
+    background-color: #5480fa;
+  }
+}

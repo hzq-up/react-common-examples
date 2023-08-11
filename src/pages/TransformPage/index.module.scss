@@ -1,49 +1,16 @@
 .container {
-  .description {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 12px;
-    color: black;
-    letter-spacing: 1px;
-    line-height: 1.5;
-    border: 1px #d3d3d3 solid;
-    p {
-      padding: 10px 0;
-
-      &:first-child {
-        margin: auto;
-      }
-    }
-  }
-  h2 {
-    font-size: 22px;
-    line-height: 34px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #ececec;
-    margin-top: 35px;
-    margin-bottom: 10px;
-  }
   .example {
     .box {
       height: 100px;
       width: 100px;
-      background-color: aquamarine;
+      background-color: #7f8fa6;
+      transition: all 1s ease;
     }
     .transform-xy-100-rotate-100deg {
       transform: translate(100px, 100px) rotate(45deg);
       transition: all 1s ease;
     }
-    .btn {
-      padding: 10px 16px;
-      border-radius: 6px;
-      background-color: #2b63fd;
-      color: white;
-      border: 1px royalblue solid;
-      cursor: pointer;
-      &:active {
-        background-color: #5480fa;
-      }
-    }
+
     .divide {
       width: 100%;
       margin: 24px 0;
