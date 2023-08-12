@@ -1,3 +1,45 @@
 .container {
-  
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+  .cardWrap {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+    background: repeating-linear-gradient(
+      -45deg,
+      #6ea0f8 0,
+      #6ea0f8 10px,
+      white 10px,
+      white 20px,
+      #df4846 20px,
+      #df4846 30px,
+      white 30px,
+      white 40px
+    ) -20px -20px/200% 200%;
+    padding: 5px;
+    border-radius: 6px;
+    transition: 0.5s;
+    .card {
+      height: 100%;
+      width: 100%;
+      background: white;
+      padding: 10px;
+      overflow: hidden;
+      box-sizing: border-box;
+      border-radius: inherit;
+      .content {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+
+    &:hover {
+      box-shadow: 5px 5px 15px #A9A9A9;
+      background-position: 0 0;
+    }
+  }
 }
