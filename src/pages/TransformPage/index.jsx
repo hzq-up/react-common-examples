@@ -19,10 +19,13 @@ export default function TransformPage() {
       <div className={styles.example}>
         <DescriptBlock>
           <p >操作：x、y轴平移100px，然后顺时针旋转100度</p>
+        </DescriptBlock>
+        <br />
+        <p>
           <CButton className={styles.btn} onClick={() => {
             setIsTransform(!isTransform)
           }}>执行操作</CButton>
-        </DescriptBlock>
+        </p>
         <br />
         <div className={`${styles.box} ${isTransform && styles['transform-xy-100-rotate-100deg']}`}></div>
       </div>

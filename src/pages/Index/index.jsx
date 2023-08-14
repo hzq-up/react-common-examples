@@ -60,7 +60,7 @@ export default function Index() {
                 className={({ isActive, isPending }) =>
                   isPending ? styles.pending : isActive ? styles.active : ""
                 }>
-                css:渐变效果
+                css:彩色斑马条纹边框
               </NavLink>
             </li>
             <li>

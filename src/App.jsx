@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import BoxMove from './pages/BoxMove'
 import Sticky from './pages/Sticky'
-import TransformPage from './pages/TransformPage'
+// import TransformPage from './pages/TransformPage'
 import Gradient from './pages/Gradient'
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
         {
           path: "timeLine",
           element: <TimeLine />,
-          errorElement: <NotFound />
+          errorElement: <NotFound />,
         },
         {
           path: "testPage",
@@ -46,8 +46,13 @@ function App() {
         },
         {
           path: "transformPage",
-          element: <TransformPage />,
-          errorElement: <NotFound />
+          // element: <TransformPage />,
+          // errorElement: <NotFound />,
+          async lazy() {
+            let TransformPage = await import("./pages/TransformPage");
+            return { Component: TransformPage.default };
+          },
+          // lazy: () => import("./pages/TransformPage/index"),
         },
         {
           path: "gradient",
