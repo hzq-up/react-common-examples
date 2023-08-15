@@ -29,6 +29,15 @@ export default function Index() {
             </li>
             <li>
               <NavLink
+                to={'/cssText'}
+                className={({ isActive, isPending }) =>
+                  isPending ? styles.pending : isActive ? styles.active : ""
+                }>
+                Css文字相关
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to={'/boxMove'}
                 className={({ isActive, isPending }) =>
                   isPending ? styles.pending : isActive ? styles.active : ""
@@ -61,6 +70,15 @@ export default function Index() {
                   isPending ? styles.pending : isActive ? styles.active : ""
                 }>
                 css:彩色斑马条纹边框
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={'/cssFilter'}
+                className={({ isActive, isPending }) =>
+                  isPending ? styles.pending : isActive ? styles.active : ""
+                }>
+                Css Filter
               </NavLink>
             </li>
             <li>

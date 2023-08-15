@@ -1,0 +1,61 @@
+.container {
+  .frostedGlassExample {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    background-image: linear-gradient(
+      90.4deg,
+      rgb(244, 199, 62) -3.8%,
+      rgb(244, 62, 62) 46.8%,
+      rgb(245, 61, 195) 98.8%
+    );
+    .frostedGlass {
+      $h: 100px;
+      $w: fit-content;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: $w;
+      height: $h;
+      font-size: 50px;
+      font-weight: bold;
+      color: white;
+      &::after {
+        position: absolute;
+        width: 170px;
+        height: 100%;
+        left: calc($w/2 - 170px / 2);
+        top: 0;
+        content: " ";
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(4px);
+      }
+    }
+  }
+  .grayscaleExample {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    &:hover .grayscale {
+      width: 0;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .grayscale {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-right: 3px #333 solid;
+      backdrop-filter: grayscale(100%);
+      transition: 1s ease-in;
+    }
+
+  }
+}

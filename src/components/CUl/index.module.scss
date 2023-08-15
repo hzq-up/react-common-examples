@@ -1,0 +1,13 @@
+.CUl {
+  list-style-type: none;
+  li {
+    padding: 2px 0;
+    &:before {
+      content: "\2022"; /* 实心圆点的 Unicode 编码 */
+      font-size: large;
+      color: black;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  }
+}

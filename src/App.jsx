@@ -2,7 +2,8 @@ import TestPage from '@/pages/TestPage'
 import TimeLine from '@/pages/TimeLinePage/index'
 import Index from '@/pages/Index/index'
 import NotFound from '@/pages/ErrorPage/NotFound/index'
-import React from 'react'
+import React, { lazy } from 'react'
+import styles from './App.module.scss'
 import {
   createBrowserRouter,
   Navigate,
@@ -35,6 +36,14 @@ function App() {
           errorElement: <NotFound />
         },
         {
+          path: "cssText",
+          async lazy() {
+            let CssText = await import("./pages/CssText");
+            return { Component: CssText.default }
+          },
+          errorElement: <NotFound />
+        },
+        {
           path: "boxMove",
           element: <BoxMove />,
           errorElement: <NotFound />
@@ -46,8 +55,8 @@ function App() {
         },
         {
           path: "transformPage",
-          // element: <TransformPage />,
-          // errorElement: <NotFound />,
+          errorElement: <NotFound />,
+          // 路由懒加载
           async lazy() {
             let TransformPage = await import("./pages/TransformPage");
             return { Component: TransformPage.default };
@@ -57,6 +66,14 @@ function App() {
         {
           path: "gradient",
           element: <Gradient />,
+          errorElement: <NotFound />
+        },
+        {
+          path: "cssFilter",
+          async lazy() {
+            let CssFilter = await import("./pages/CssFilter");
+            return { Component: CssFilter.default }
+          },
           errorElement: <NotFound />
         },
       ]
