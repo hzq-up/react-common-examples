@@ -161,10 +161,75 @@ export const MyButton = styled.button.attrs(props => ({
 <MyButton variant='primary'>主题按钮</MyButton>
 ```
 
+### 多态属性(polymorphic prop) as
+多态属性是指你可以在组件中通过一个属性来控制最终渲染的 HTML 元素类型或自定义组件类型。
+
+比如我们写导航栏组件的时候，有些是菜单栏，有些是按钮，有些是链接，但所有的样式都相同，这时候我们可以通过这个多态属性来控制最终渲染成什么html标签或者自定义组件。
+
+* 使用多态属性动态创建标签
+```javascript
+export const Component = styled.div`
+  font-family: "Microsoft YaHei";
+  padding: 10px 10px;
+  line-height: 1;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 14px;
+  background-color: blue;
+  color: white;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
+
+```
+
+```javascript
+// 这个样式化组件最终会渲染成 a 标签
+<Component as="a" href="https://www.baidu.com">button</Component>
+<br/>
+// 这个样式化组件最终会渲染成 button 标签
+<Component
+  as="button"
+  onClick={() => alert('这是个按钮')}
+>
+  button
+</Component>
+```
+
+* 使用 `forwardedAs` 属性来传递被包裹组件的多态属性值。
+
+如果一个组件被另一个或多个组件包裹着，外层组件可以通过 `forwardedAs` 属性来传递多态属(`as`)性值到内部组件。
+
+**不知道是不是我理解错了，经过我实际测试发现通过`forwardedAs`这样传到内部组件的多态属性值( `as`), 最终不会渲染成传入多态属性值所代表的html标签或者组件。**
 
 
+```javascript
+export const Component = styled.div`
+  font-family: "Microsoft YaHei";
+  padding: 10px 10px;
+  line-height: 1;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 14px;
+  background-color: blue;
+  color: white;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
 
+// 使用 styled() 高阶组件包装 Component，并传递 as 属性
+const WrappedComponent = styled(Component)`
+  /* 这里可以添加额外样式 */
+`;
+```
 
+```javascript
+<WrappedButton forwardedAs="a" href="#">
+  Wrapped Link Button
+</WrappedButton>
+```
 
 
 
