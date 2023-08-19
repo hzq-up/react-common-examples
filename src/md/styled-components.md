@@ -1,5 +1,5 @@
 ## 介绍
-styed-components 是一个基于 JavaScript 的样式库，它通过标签模板字符串的方式样式化组件，它允许你使用 JavaScript 直接编写 CSS 样式，并且样式组件级隔离。
+styed-components 是一个基于 JavaScript 的样式库，它通过标签模板字符串的方式样式化组件，它允许我们使用 JavaScript 直接编写 CSS 样式，并且样式是组件级隔离。
 
 
 ## 基础用法
@@ -24,7 +24,7 @@ styed-components 是一个基于 JavaScript 的样式库，它通过标签模板
 <Button>Click Me</Button>
 ```
 
-### 创建自定义样式化组件，继承传入组件样式，并添加新的样式
+### 样式化组件的样式可以被继承，也可以被覆盖
 ```javascript
   const Button = styled.button`
     background: blue;
@@ -38,6 +38,7 @@ styed-components 是一个基于 JavaScript 的样式库，它通过标签模板
   `
 ```
 ```javascript
+<Button>Click Me</Button>
 <TomatoButton>Click Me</TomatoButton>
 ```
 
@@ -78,24 +79,6 @@ export const MyInput = styled.input`
 
 ```javascript
 <MyInput type={"password"} padding={'10px'}></MyInput>
-```
-
-### 样式化组件的样式可以被继承，也可以被覆盖
-```javascript
-const Button = styled.button`
-  background: tomato;
-  border: 1px solid tomato;
-`
-
-const TomatoButton = styled(Button)`
-  background: white;
-  border: 1px solid white;
-`
-```
-
-```javascript
-<Button>Button</Button>
-<TomatoButton>TomatoButton</TomatoButton>
 ```
 
 
@@ -201,11 +184,10 @@ export const Component = styled.div`
 
 如果一个组件被另一个或多个组件包裹着，外层组件可以通过 `forwardedAs` 属性来传递多态属(`as`)性值到内部组件。
 
-**不知道是不是我理解错了，经过我实际测试发现通过`forwardedAs`这样传到内部组件的多态属性值( `as`), 最终不会渲染成传入多态属性值所代表的html标签或者组件。**
-
+看下面例子：
 
 ```javascript
-export const Component = styled.div`
+export const Component = styled.button`
   font-family: "Microsoft YaHei";
   padding: 10px 10px;
   line-height: 1;
@@ -219,16 +201,24 @@ export const Component = styled.div`
   cursor: pointer;
 `;
 
+export const WrappedButton = (props) => {
+
+  return <div>
+    <Component {...props} />
+  </div>;
+}
+
+
 // 使用 styled() 高阶组件包装 Component，并传递 as 属性
-const WrappedComponent = styled(Component)`
+const WrappedComponent = styled(WrappedButton)`
   /* 这里可以添加额外样式 */
 `;
 ```
 
 ```javascript
-<WrappedButton forwardedAs="a" href="#">
+<WrappedComponent forwardedAs="a" href="https://www.baidu.com">
   Wrapped Link Button
-</WrappedButton>
+</WrappedComponent>
 ```
 
 
