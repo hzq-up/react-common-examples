@@ -64,7 +64,8 @@ export const Section = styled.section`
 ```
 > 注意：使用 ES 的插值语法时，不支持 伪类选择器、媒体查询、嵌套等！
 
-> 注意：带 $ 的参数是临时属性(Transient props)不会作用底层 React 节点或渲染到 DOM 元素，而是仅作为插值函数的参数。
+
+> **注意：带 $ 的参数是临时属性(Transient props)不会作用底层 React 节点或渲染到 DOM 元素，而是仅作为插值函数的参数。**
 
 
 ### `styledComponent`(样式化组件)可以像普通的React组件一样使用任何属性，如果该属性是有效属性，便会作用于 HTML 节点，否则仅作为插值函数的参数。
@@ -221,9 +222,114 @@ const WrappedComponent = styled(WrappedButton)`
 </WrappedComponent>
 ```
 
+### 控制属性传递（属性过滤器）
+> 默认情况下，所有被包裹组件的属性值都会被传递到内部组件。而临时属性不会传递到最终渲染的 react 组件上。那假如我需要动态控制某些属性值能不能传递到最终渲染的 react 组件上时，就可以通过 `shouldForwardProp` 属性来控制。可以它当做一个属性过滤函数，类似 `Array.filter` 方法。
+
+```javascript
+export const Comp = styled('div').withConfig({
+  shouldForwardProp: (prop) => !['customProp'].includes(prop),
+})`
+  color: ${props => props.color};
+`;
+```
+
+```javascript
+  <Comp color='red' customProp="test">hello</Comp>
+```
+
+**注意：这里面的变量color不能使用临时属性(带$的属性)，临时属性的值是不会传递到最终渲染的组件上**
+
+## 高阶用法
+
+### 使用 `ThemeProvider` 定义主题
+> 通过 `ThemeProvider` 可以将定义的主题样式注入到组件树中其下方任意位置的所有样式组件中，或者可以说是：将定义的样式作用在被 `ThemeProvider` 包裹的所有子组件上。
+
+```javascript
+const Box = styled.div`
+  color: ${props => props.theme.color};
+`
+```
+
+```javascript
+import {ThemeProvider} from "styled-components";
+
+// theme: 一个对象，将作为 theme 注入到组件树下样式组件的所有插值中。
+<ThemeProvider theme={{ color: 'green' }}>
+  <Box>ThemeProvider</Box>
+</ThemeProvider>
+```
 
 
 
+
+
+### 通过 `css` 方法定义样式
+> 有时候，仅仅是为了给组件添加某个额外的样式，如果通过 `styled()` 方法创建组件，那就会显得有些繁琐。这时，我们可以通过 `css` 方法来添加额外组件。它适用于普通 HTML 标签和组件，并支持任何样式化组件(`styled component`)支持的所有内容，包括基于 props、主题和自定义组件进行调整。
+
+> 要启用对 css 属性的支持，您必须使用 Babel 插件。 
+
+例如：下面的例子：
+
+```javascript
+import styled from 'styled-components/macro'
+
+<div
+  css={`
+    background: papayawhip;
+    color: ${props => props.theme.colors.text};
+  `}
+/>
+
+<Button
+  css="padding: 0.5em 1em;"
+/>
+```
+
+Babel 插件将任何带有 css 属性的元素转换为样式化组件(`styled component`)。上面的diamante将会转换成：
+
+```javascript
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+  background: papayawhip;
+  color: ${props => props.theme.colors.text};
+`
+
+const StyledButton = styled(Button)`
+  padding: 0.5em 1em;
+`
+
+<StyledDiv />
+<StyledButton />
+
+```
+
+### 使用 `createGlobalStyle` 创建全局样式 
+> 通常，样式化组件会自动将范围限定为本组件内，样式组件级隔离；而全局样式组件允许我们创建一个样式表，该样式表会作用域全局，所有组件该样式表。
+
+例如：透明通常给 `body` margin padding 以及动态的修改背景，
+```javascript
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    background: ${props => (props.$whiteColor ? 'white' : 'black')};
+  }
+```
+
+```javascript
+<GlobalStyle $whiteColor />
+```
+
+> 被 `<ThemeProvider>` 包裹着的全局样式组件 (`<GlobalStyle/>`) 也可以访问到 `<ThemeProvider>` 中定义的主题样式
+
+```javascript
+<ThemeProvider theme={{ fontFamily: 'Helvetica Neue' }}>
+  <React.Fragment>
+    <GlobalStyle $whiteColor />
+  </React.Fragment>
+</ThemeProvider>
+```
 
 链接：
 https://styled-components.com/docs/api#primary
