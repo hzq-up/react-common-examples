@@ -260,7 +260,49 @@ import {ThemeProvider} from "styled-components";
 ```
 
 
+### 从 `ThemeProvider` 中获取当前主题样式 `theme`
 
+* 使用 `withTheme` 高阶组件获取
+
+```javascript
+import { withTheme } from 'styled-components'
+
+function MyComponent({theme}){
+  return <div>{JSON.stringify(theme)}</div>
+}
+
+export default withTheme(MyComponent)
+```
+
+* 使用 `useTheme` 钩子函数获取
+
+```javascript
+import { useTheme } from 'styled-components'
+
+
+export default function MyComponent() {
+  const theme = useTheme()
+  return <div>
+    当前自定义主题:
+    <br/>
+    {JSON.stringify(theme)}
+  </div>
+}
+```
+
+* 使用 `ThemeConsumer` 组件将当前主题样式传递给子函数
+ 
+```javascript
+import { ThemeConsumer } from 'styled-components'
+
+export default function OrderList({theme}) {
+  return (
+    <ThemeConsumer>
+      {theme => <div>The theme color is {theme.color}.</div>}
+    </ThemeConsumer>
+  )
+}
+```
 
 
 ### 通过 `css` 方法定义样式
@@ -330,6 +372,55 @@ const GlobalStyle = createGlobalStyle`
   </React.Fragment>
 </ThemeProvider>
 ```
+
+### 用 `css` 函数创建样式块
+> 我们可以通过 `css` 函数创建一个样式块，该函数接收一个带有 CSS 和插值的标记模板文字的参数,返回一个插值数组，它是一个扁平化的数据结构，我们可以将其作为插值本身进行传递。
+
+```javascript
+export const commonCss = css`
+  color: white;
+  background-color: #1677FF;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  color:  ${props => props.$color ? props.$color : 'white'};
+`
+
+export const MyButton = styled.button`
+  ${props => props.$primary ? commonCss : 'color: blue'}
+`
+```
+
+```javascript
+<MyButton $primary $color="black">按钮</MyButton>
+```
+
+### 创建动画关键帧
+使用 `keyframes` 函数创建动画关键帧辅助函数，改函数返回要在动画声明中使用的关键帧模型,可以在返回的模型上使用 `getName()` 获取生成的动画名称
+
+> **注意： 在 styled-components v3 及以下版本中， keyframes 帮助器直接返回动画名称，而不是使用 getName 方法返回对象。**
+
+```javascript
+import styled, { keyframes } from 'styled-components'
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
+
+export const FadeInButton = styled.button`
+  animation: 1s ${fadeIn} ease-out;
+`
+```
+
+```javascript
+<FadeInButton>按钮</FadeInButton>
+```
+
 
 链接：
 https://styled-components.com/docs/api#primary
