@@ -421,6 +421,147 @@ export const FadeInButton = styled.button`
 <FadeInButton>按钮</FadeInButton>
 ```
 
+## 源码解析
+> 首先拉取 styled-components 仓库，然后找到 /packages/styled-components 文件夹，核心代码都放在这个文件夹里；为了方便，后面会把 styled-components 简写为 sc。
+
+### 如何阅读源代码？
+当我们对该项目有所了解的时候，我个人通常是采用那面两种方法结合使用。
+* 第一种：当我们使用过该项目的一些 api ，对于某个功能是如何实现的，带着这个问题去看，比如当我们使用 styled 函数的时候，我们会想到 styled 函数应该是通过 `document.createElement` 来创建 `<style>` 标签来实现样式化的，然后全局搜索 `document.createElement` 快速定位到。这种方式适合看具体单独的某个功能如何实现。
+* 第二种：从入口文件看起，根据导入、导出的文件，找到对应的文件，一层一层剥开，但是这种在比较复杂的项目中，可能需要花比较长的时间才能理清逻辑。这个时候我们就需要通过打断点的方式，来调试代码，找到一些关键函数的调用关系，梳理清楚主要逻辑。
+
+对于 sc 这个项目我是采用两种方式结合使用。
+
+### makeStyleTag 创建 style 标签
+一开始我就通过 `document.createElement('style')` 定位到 `makeStyleTag` 函数。代码所在文件：
+
+
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c94449e6de974b0ab4792aa385888c71~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=244&h=485&e=png&b=202429)
+
+代码非常简单易懂，这是去掉类型后的代码：
+
+```javascript
+export const makeStyleTag = (target) => {
+  const head = document.head;
+  const parent = target || head;
+  const style = document.createElement('style');
+  // style 标签的插入位置
+  const prevStyle = findLastStyleTag(parent);
+  const nextSibling = prevStyle !== undefined ? prevStyle.nextSibling : null;
+
+  // 自定义属性 data-set
+  style.setAttribute(SC_ATTR, SC_ATTR_ACTIVE);
+  style.setAttribute(SC_ATTR_VERSION, SC_VERSION);
+
+  const nonce = getNonce();
+
+  // 设置 style 标签的 nonce 属性：一种加密的随机数（一次使用的数字）
+  if (nonce) style.setAttribute('nonce', nonce);
+
+  // 在父节点里的最后一个子节点的位置插入新的 style 节点
+  parent.insertBefore(style, nextSibling);
+
+  return style;
+};
+```
+我们可以看到，这个函数主要做了以下几件事：
+1. 获取父节点，如果没有传入，则默认获取 `document.head`
+2. 获取父节点的最后一个 `<style>` 标签，如果没有，则返回 `null`
+3. 创建 `<style>` 标签，并设置了自定义属性
+4. 设置 `<style>` 标签的 `nonce` 属性
+5. 将 `<style>` 标签插入到父节点的最后一个子节点的位置，然后返回 style 节点。
+
+### 标签模板字符串
+通过第一篇文章，我们知道通过 `styled.div` 和 `styled.div()` 都能创建一个样式化的 `<div>` 标签，这是怎么回事？来看一个例子：
+
+
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b8e541617c34459fbb94d41b93ee9cad~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=601&h=116&e=png&b=212225)
+
+这其实是 ES6 的一个新语法：[模板字符串](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Template_literals)，在这可以把它看做是一个函数，接受传参。
+
+### styled 函数
+我们找到入口文件：packages/styled-components/src/index.ts，
+```javascript
+import styled from './constructors/styled';
+
+export * from './base';
+export {
+  CSSKeyframes,
+  CSSObject,
+  CSSProp,
+  CSSProperties,
+  CSSPseudos,
+  DefaultTheme,
+  ExecutionContext,
+  ExecutionProps,
+  IStyledComponent,
+  IStyledComponentFactory,
+  IStyledStatics,
+  PolymorphicComponent,
+  PolymorphicComponentProps,
+  RuleSet,
+  Runtime,
+  StyledObject,
+  StyledOptions,
+  WebTarget,
+} from './types';
+export { styled as default, styled };
+
+```
+默认导出的 styled 函数是从 packages/styled-components/src/constructors/styled.tsx 导出的，找到它，去掉类型后的代码方便阅读。
+
+```javascript 
+import createStyledComponent from '../models/StyledComponent';
+
+// HTML 标签列表
+import domElements from '../utils/domElements';
+import constructWithOptions from './constructWithOptions';
+
+// 创建基础的 styled 方法
+const baseStyled = (tag) =>
+ constructWithOptions(createStyledComponent, tag);
+ 
+const styled = baseStyled;
+
+// 实现通过 styled[domElement] 和 styled(domElement) 都能创建样式化组件
+domElements.forEach(domElement => {
+ styled[domElement] = baseStyled(domElement);
+});
+
+export default styled;
+
+```
+### componentConstructor 构造样式化组件
+
+我们看到通过 `styled` 函数是基础的 `styled` 方法：`baseStyled` 调用了 `constructWithOptions` 方法,找到 `constructWithOptions` 方法所在的 src/constructors/constructWithOptions.ts，去掉类型后关键的代码如下
+
+```javascript
+import css from './css';
+
+export default function constructWithOptions(componentConstructor, tag, options) {
+
+ const templateFunction = (initialStyles, ...interpolations) =>
+   componentConstructor(tag, options, css(initialStyles, ...interpolations));
+ 
+ // 返回样式化组件
+ return templateFunction;
+ 
+}
+```
+`constructWithOptions` 函数的核心是 `templateFunction` 方法，它调用组件的构造方法 `componentConstructor`返回一个样式化组件(携带样式的组件)。
+
+
+源码解析参考链接:
+
+https://blog.csdn.net/dKnightL/article/details/120825367
+
+https://juejin.cn/post/6885911421167599623#heading-4
+
+https://juejin.cn/post/6905166914234875911
+
+https://github.com/wangpin34/blog/issues/49
+
+https://www.51cto.com/article/719419.html
+
 
 链接：
 https://styled-components.com/docs/api#primary
